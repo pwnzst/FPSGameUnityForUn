@@ -117,9 +117,9 @@ public class Gun : MonoBehaviour
         else if (currentAmmo < maxAmmo && magazineAmmo >= 1)
         {
             int tmpdif = (maxAmmo - currentAmmo);
-            if (magazineAmmo >= tmpdif) { 
-            currentAmmo += tmpdif;
-            magazineAmmo -= tmpdif;
+            if (magazineAmmo >= tmpdif) {
+                currentAmmo += tmpdif;
+                magazineAmmo -= tmpdif;
             }
             else
             {
