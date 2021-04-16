@@ -23,7 +23,7 @@ public class EnemyAI : MonoBehaviour
     //Attacking
     public float timeBetweenAttacks;
     bool alreadyAttacked;
-    public float damageAmount = 35f;
+    public float damageAmount = 5f;
 
     public float sightRange, attackRange;
     public bool playerInSightRange, playerInAttackRange;
