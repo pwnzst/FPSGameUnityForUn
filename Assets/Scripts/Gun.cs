@@ -10,7 +10,7 @@ public class Gun : MonoBehaviour
     float damage = 10;
 
     public Transform fpsCam;
-    public float range = 20;
+    public float range = 50;
     public float impactForce = 150;
 
     public int fireRate = 10;
@@ -80,11 +80,6 @@ public class Gun : MonoBehaviour
             StartCoroutine(Reload());
         }
 
-        if(currentAmmo==0 && magazineAmmo == 0)
-        {
-            currentAmmo = maxAmmo;
-            magazineAmmo += 10;
-        }
 
 
     }

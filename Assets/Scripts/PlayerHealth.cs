@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class PlayerHealth : MonoBehaviour
 {
+    public GameOver GameOverScreen;
     public static PlayerHealth singleton;
     public float currentHealth;
     public float maxHealth = 100f;
@@ -47,7 +48,8 @@ public class PlayerHealth : MonoBehaviour
         currentHealth = 0;
         isDead = true;
         healthSlider.value = 0;
-        Debug.Log("Умер");
+        //Debug.Log("Умер");
+        GameOverScreen.Setup();
     }
 
     void UpdateHealthCounter()
