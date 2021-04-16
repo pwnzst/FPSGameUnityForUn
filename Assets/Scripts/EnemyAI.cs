@@ -19,7 +19,12 @@ public class EnemyAI : MonoBehaviour
 
     
 
-   
+
+    //Attacking
+    public float timeBetweenAttacks;
+    bool alreadyAttacked;
+    public float damageAmount = 35f;
+
     public float sightRange, attackRange;
     public bool playerInSightRange, playerInAttackRange;
 
@@ -36,8 +41,9 @@ public class EnemyAI : MonoBehaviour
         playerInAttackRange = Physics.CheckSphere(transform.position, attackRange, whatIsPlayer);
 
         if (!playerInSightRange && !playerInAttackRange) Patroling();
-        if (playerInSightRange && !playerInAttackRange) ChasePlayer();
-        
+        if (playerInSightRange && !playerInAttackRange && !PlayerHealth.singleton.isDead) ChasePlayer();
+        if (playerInAttackRange && playerInSightRange && !PlayerHealth.singleton.isDead) AttackPlayer();
+
     }
 
     private void Patroling()
@@ -65,10 +71,32 @@ public class EnemyAI : MonoBehaviour
             walkPointSet = true;
     }
 
+
     private void ChasePlayer()
     {
         agent.SetDestination(player.position);
     }
 
+
+    private void AttackPlayer()
+    {
+        //Make sure enemy doesn't move
+        agent.SetDestination(transform.position);
+        transform.LookAt(player);
+        
+
+        if (!alreadyAttacked)
+        {
+            PlayerHealth.singleton.DamagePlayer(damageAmount);
+            alreadyAttacked = true;
+            Invoke(nameof(ResetAttack), timeBetweenAttacks);
+        }
+    }
+    private void ResetAttack()
+    {
+        alreadyAttacked = false;
+    }
     
+
+
 }

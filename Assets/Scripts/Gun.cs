@@ -5,6 +5,10 @@ using UnityEngine;
 
 public class Gun : MonoBehaviour
 {
+
+    [SerializeField]
+    float damage = 10;
+
     public Transform fpsCam;
     public float range = 20;
     public float impactForce = 150;
@@ -76,6 +80,12 @@ public class Gun : MonoBehaviour
             StartCoroutine(Reload());
         }
 
+        if(currentAmmo==0 && magazineAmmo == 0)
+        {
+            currentAmmo = maxAmmo;
+            magazineAmmo += 10;
+        }
+
 
     }
 
@@ -94,11 +104,19 @@ public class Gun : MonoBehaviour
             if (hit.rigidbody != null)
             {
                 hit.rigidbody.AddForce(-hit.normal * impactForce);
+                //Debug.Log("стрельнул");
+               
             }
 
             Quaternion impactRotation = Quaternion.LookRotation(hit.normal);
             GameObject impact = Instantiate(impactEffect, hit.point, impactRotation);
             impact.transform.parent = hit.transform;
+            if (hit.transform.tag == "Enemy")
+            {
+                //Debug.Log("попал");
+                EnemyHealth enemyHealthScript = hit.transform.GetComponent<EnemyHealth>();
+                enemyHealthScript.DeductHealth(damage);
+            }
             Destroy(impact, 5);
         }
     }
